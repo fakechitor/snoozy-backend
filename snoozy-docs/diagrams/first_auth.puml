@@ -8,7 +8,7 @@ gateway -> auth : Переадресация запроса
 auth -> google : Отправка google token
 alt Токен валидный
     google -> auth : Token info (claims)
-    auth -> auth : Генерация JWT
+    auth -> auth : Генерация JWT &\nUserRegisterEvent
     auth -> mobile : Ответ с JWT токеном
 else Токен невалидный
     google -> auth : Error response

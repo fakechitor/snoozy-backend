@@ -1,0 +1,14 @@
+@startuml
+participant "Auth Service" as auth
+queue Kafka as kafka
+participant "User Service" as user
+database "Table users" as users_db
+participant "File Service" as file
+database "Minio" as minio
+auth -> auth : Получение данных из\n google access token
+auth -> kafka : Отправка события \nUserRegisterEvent
+kafka -> user : Чтение данных
+user -> users_db : Сохранение \nпользователя
+kafka -> file: Чтение данных
+file -> minio: Сохранить в бакет \navatars/user
+@enduml
