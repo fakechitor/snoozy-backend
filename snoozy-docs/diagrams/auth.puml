@@ -1,0 +1,16 @@
+@startuml
+participant Mobile as mobile
+participant Gateway as gateway
+participant "Some Service" as service
+
+mobile -> gateway : HTTP запрос (Bearer JWT)
+gateway -> gateway : Валидация JWT
+
+alt проверка JWT успешна
+    gateway -> service : Переадресация запроса
+    service -> gateway : Ответ сервиса
+    gateway -> mobile : Ответ сервиса
+else проверка JWT неуспешна
+    gateway -> mobile : 401 Unauthorized
+end
+@enduml

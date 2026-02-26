@@ -1,0 +1,17 @@
+@startuml
+participant Mobile as mobile
+participant Gateway as gateway
+participant "Auth Service" as auth
+participant "Google Auth" as google
+mobile -> gateway : HTTP запрос с id_token
+gateway -> auth : Переадресация запроса
+auth -> google : Отправка google token
+alt Токен валидный
+    google -> auth : Token info (claims)
+    auth -> auth : Генерация JWT
+    auth -> mobile : Ответ с JWT токеном
+else Токен невалидный
+    google -> auth : Error response
+    auth -> mobile : 401 Unauthorized
+end
+@enduml
