@@ -1,3 +1,8 @@
 spring:
   application:
     name: snoozy-auth
+google:
+  oauth:
+    web-client-id: ${OAUTH_WEB_CLIENT}
+server:
+  port: 8081
