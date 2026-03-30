@@ -24,12 +24,12 @@ services:
     ports:
       - '9000:9000'
       - '9001:9001'
-    networks:
-      - app-network
     volumes:
       - 'minio_data:/data'
     env_file:
       - .env
+    networks:
+      - app_network
 
 volumes:
   pg_data:
