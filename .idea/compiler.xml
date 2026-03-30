@@ -5,6 +5,12 @@
       <module name="snoozy-auth" options="-parameters" />
       <module name="snoozy-auth.main" options="-parameters" />
       <module name="snoozy-auth.test" options="-parameters" />
+      <module name="snoozy-backend.snoozy-auth" options="-parameters" />
+      <module name="snoozy-backend.snoozy-auth.main" options="-parameters" />
+      <module name="snoozy-backend.snoozy-auth.test" options="-parameters" />
+      <module name="snoozy-backend.snoozy-gateway" options="-parameters" />
+      <module name="snoozy-backend.snoozy-gateway.main" options="-parameters" />
+      <module name="snoozy-backend.snoozy-gateway.test" options="-parameters" />
       <module name="snoozy-gateway" options="-parameters" />
       <module name="snoozy-gateway.main" options="-parameters" />
       <module name="snoozy-gateway.test" options="-parameters" />
