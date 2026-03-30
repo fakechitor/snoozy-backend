@@ -20,6 +20,13 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-kafka")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation ("org.springframework.boot:spring-boot-starter-web")
+    implementation ("com.google.api-client:google-api-client:2.8.1")
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+    testCompileOnly("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-kafka-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

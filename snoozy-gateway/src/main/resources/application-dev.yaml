@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: snoozy-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-service
+              uri: http://localhost:8081
+              predicates:
+                - Path=/api/v1/auth/**
