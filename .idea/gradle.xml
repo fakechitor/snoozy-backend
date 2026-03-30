@@ -30,6 +30,9 @@
           </set>
         </option>
       </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/snoozy-user" />
+      </GradleProjectSettings>
     </option>
   </component>
 </project>
