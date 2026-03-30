@@ -1,6 +1,11 @@
 spring:
   application:
     name: snoozy-auth
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
 google:
   oauth:
     web-client-id: ${OAUTH_WEB_CLIENT}
