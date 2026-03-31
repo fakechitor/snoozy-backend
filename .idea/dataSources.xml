@@ -20,7 +20,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="jdbc:postgresql://localhost:5432/snoozy [DEBUG]" group="​SnoozyAuthApplication" uuid="6a8b00a0-f731-4c2f-a2d2-3df7323d218b">
+    <data-source source="LOCAL" name="jdbc:postgresql://localhost:5432/snoozy [DEBUG]" group="​SnoozyUserApplication" uuid="01cd8648-9ae4-4be4-b6ed-ab78c361f71e">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>

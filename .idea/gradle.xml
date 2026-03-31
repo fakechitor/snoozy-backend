@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/snoozy-auth" />
             <option value="$PROJECT_DIR$/snoozy-gateway" />
+            <option value="$PROJECT_DIR$/snoozy-user" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -32,6 +33,11 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/snoozy-user" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/snoozy-user" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>
