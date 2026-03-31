@@ -24,6 +24,14 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/snoozy-file" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/snoozy-file" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/snoozy-gateway" />
         <option name="modules">
           <set>
