@@ -1,6 +1,8 @@
 spring:
   application:
     name: snoozy-auth
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
 google:
   oauth:
     web-client-id: ${OAUTH_WEB_CLIENT}

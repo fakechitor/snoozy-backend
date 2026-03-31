@@ -4,9 +4,12 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
+import lombok.RequiredArgsConstructor;
 import org.snoozy.snoozyauth.dto.AuthResponse;
 import org.snoozy.snoozyauth.dto.GoogleLoginRequest;
 import org.snoozy.snoozyauth.dto.GoogleUserInfo;
+import org.snoozy.snoozyauth.dto.mapper.GoogleAuthMapper;
+import org.snoozy.snoozyauth.producer.GoogleAuthProducer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +24,14 @@ public class GoogleAuthService {
 
     private final String webClientId;
 
-    public GoogleAuthService(@Value("${google.oauth.web-client-id}") String webClientId) {
+    private final GoogleAuthProducer googleAuthProducer;
+
+    private final GoogleAuthMapper googleAuthMapper;
+
+    public GoogleAuthService(@Value("${google.oauth.web-client-id}") String webClientId, GoogleAuthProducer googleAuthProducer, GoogleAuthMapper googleAuthMapper) {
         this.webClientId = webClientId.trim();
+        this.googleAuthProducer = googleAuthProducer;
+        this.googleAuthMapper = googleAuthMapper;
         this.verifier = new GoogleIdTokenVerifier.Builder(
                 new NetHttpTransport(),
                 GsonFactory.getDefaultInstance()
@@ -34,6 +43,7 @@ public class GoogleAuthService {
     public AuthResponse authenticate(GoogleLoginRequest googleLoginRequest) {
         String idTokenString = googleLoginRequest.idToken().trim();
         GoogleUserInfo userInfo = verify(idTokenString);
+        googleAuthProducer.sendGoogleAuthEvent(googleAuthMapper.toEvent(userInfo));
         return new AuthResponse(
                 "",
                 "google",
