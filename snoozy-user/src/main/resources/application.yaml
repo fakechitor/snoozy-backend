@@ -12,5 +12,16 @@ spring:
     locations: classpath:db/migration
     default-schema: public
     table: flyway_schema_history_user
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+    consumer:
+      group-id: user
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.fakechitor.*.producer.event"
+        spring.json.type.mapping: |
+          org.snoozy.snoozyauth.producer.event.GoogleAuthEvent:org.snoozy.snoozyuser.consumer.event.GoogleAuthMessage
 server:
   port: 8082
