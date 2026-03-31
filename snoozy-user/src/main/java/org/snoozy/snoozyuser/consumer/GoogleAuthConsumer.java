@@ -21,5 +21,6 @@ class GoogleAuthConsumer {
     public void receiveRegistrationEvent(@Payload GoogleAuthMessage authMessage) {
         log.info("Received Google Auth Event, {}", authMessage);
         userService.handleAuthEvent(authMessage);
+        log.info("User registered, {}", authMessage.email());
     }
 }
