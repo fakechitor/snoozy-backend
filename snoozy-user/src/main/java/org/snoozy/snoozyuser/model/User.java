@@ -26,12 +26,13 @@ public class User {
 
     private String username;
 
-    @Column(name = "avatar_id")
-    private Long avatarId;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "avatar_id")
+    private Avatar avatar;
 
     @Column(nullable = false)
     private BigDecimal balance = BigDecimal.ZERO;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 }
