@@ -1,6 +1,14 @@
 spring:
   application:
     name: snoozy-auth
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
 google:
@@ -8,3 +16,5 @@ google:
     web-client-id: ${OAUTH_WEB_CLIENT}
 server:
   port: 8081
+jwt:
+  secret-token: ${JWT_SECRET_TOKEN}

@@ -27,18 +27,14 @@ public class GoogleAuthService {
 
     private final GoogleVerifierService googleAuthVerifier;
 
+    private final JwtService jwtService;
+
     public AuthResponse authenticate(GoogleLoginRequest googleLoginRequest) {
         String idTokenString = googleLoginRequest.idToken().trim();
         GoogleUserInfo userInfo = googleAuthVerifier.verify(idTokenString);
 
         googleAuthProducer.sendGoogleAuthEvent(googleAuthMapper.toEvent(userInfo));
 
-        return new AuthResponse(
-                "",
-                "google",
-                1L,
-                userInfo.email(),
-                userInfo.name()
-        );
+        return new AuthResponse(jwtService.generateToken(userInfo));
     }
 }
