@@ -24,6 +24,9 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @Column(name = "password")
+    private String password;
+
     private String username;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
