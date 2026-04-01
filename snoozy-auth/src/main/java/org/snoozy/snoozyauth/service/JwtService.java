@@ -6,6 +6,7 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.snoozy.snoozyauth.dto.GoogleUserInfo;
 import org.snoozy.snoozyauth.util.AuthType;
+import org.snoozy.snoozyauth.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,18 @@ public class JwtService {
                 .claim("email", userInfo.email())
                 .claim("name", userInfo.name())
                 .claim("auth", AuthType.GOOGLE.name())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .signWith(getSigningKey())
+                .compact();
+    }
+
+    public String generateTokenBasic(User user) {
+        return Jwts.builder()
+                .subject(user.getId().toString())
+                .claim("email", user.getEmail())
+                .claim("name", user.getUsername())
+                .claim("auth", AuthType.BASIC.name())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION))
                 .signWith(getSigningKey())
