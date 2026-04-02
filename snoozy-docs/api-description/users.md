@@ -33,6 +33,7 @@ http://localhost:8080/api/v1/users/me
 ```
 {
   "username": "test_user",
-  "email": "aassadsadsa@gmail.com"
+  "email": "aassadsadsa@gmail.com",
+  "phoneNumber": "79998881234"
 }
 ```

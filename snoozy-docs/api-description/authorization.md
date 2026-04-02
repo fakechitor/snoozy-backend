@@ -6,7 +6,7 @@
 ```
 {
   "username" : "test_user",
-  "email" : "aassadsadasdsa@gmail.com",
+  "phoneNumber" : "79998881234",
   "password" : "asdasd",
   "confirmPassword" : "asdasd"
 }
@@ -31,7 +31,7 @@ Errors
 #### Request (application-json)
 ```
 {
-  "email": "user@example.com",
+  "phoneNumber": "79998881234",
   "password": "password123"
 }
 ```
