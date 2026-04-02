@@ -2,6 +2,8 @@ package org.snoozy.snoozyuser.service;
 
 import lombok.RequiredArgsConstructor;
 import org.snoozy.snoozyuser.consumer.event.GoogleAuthMessage;
+import org.snoozy.snoozyuser.dto.UserResponseDto;
+import org.snoozy.snoozyuser.dto.mapper.UserMapper;import org.snoozy.snoozyuser.exception.UserNotFoundException;
 import org.snoozy.snoozyuser.model.Avatar;
 import org.snoozy.snoozyuser.model.User;
 import org.snoozy.snoozyuser.repository.UserRepository;
@@ -15,8 +17,17 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final UserMapper userMapper;
+
     public User save(User user){
         return userRepository.save(user);
+    }
+
+    public UserResponseDto getUserInfo(String email) {
+        var user = userRepository.findByEmail(email).orElseThrow(
+                () -> new UserNotFoundException("User doesn't exist"));
+
+        return userMapper.getUserResponseDto(user);
     }
 
     public void handleAuthEvent(GoogleAuthMessage authMessage) {
