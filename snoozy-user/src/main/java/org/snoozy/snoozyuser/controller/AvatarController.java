@@ -17,8 +17,8 @@ public class AvatarController {
     private final AvatarService avatarService;
 
     @GetMapping
-    public ResponseEntity<byte[]> getAvatar(@RequestHeader("X-User-Email") String email) {
-        byte[] image = avatarService.getAvatar(email);
+    public ResponseEntity<byte[]> getAvatar(@RequestHeader("X-User-Id") Long userId) {
+        byte[] image = avatarService.getAvatar(userId);
 
         return ResponseEntity
                 .ok()

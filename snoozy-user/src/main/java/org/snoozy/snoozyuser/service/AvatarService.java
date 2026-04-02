@@ -20,21 +20,22 @@ public class AvatarService {
 
     private static final Long BASIC_AVATAR_ID = 1L;
 
-    public byte[] getAvatar(String email) {
-        Avatar avatar = findAvatar(email);
+    public byte[] getAvatar(Long userId) {
+        Avatar avatar = findAvatar(userId);
         return fileClient.getAvatar(avatar.getObjectKey());
     }
 
-    private Avatar findAvatar(String email) {
-        User user = userRepository.findByEmail((email)).get();
-        Long id;
+    private Avatar findAvatar(Long userId) {
+        Long avatarId;
+
+        User user = userRepository.findById((userId)).get();
 
         if (user.getAvatar() == null) {
-            id = BASIC_AVATAR_ID;
+            avatarId = BASIC_AVATAR_ID;
         }
         else{
-            id = user.getAvatar().getId();
+            avatarId = user.getAvatar().getId();
         }
-        return avatarRepository.findById(id).get();
+        return avatarRepository.findById(avatarId).get();
     }
 }
