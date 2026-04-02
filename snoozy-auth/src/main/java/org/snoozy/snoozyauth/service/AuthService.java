@@ -5,9 +5,11 @@ import org.snoozy.snoozyauth.dto.AuthResponse;
 import org.snoozy.snoozyauth.dto.LoginRequestDto;
 import org.snoozy.snoozyauth.dto.RegisterRequestDto;
 import org.snoozy.snoozyauth.exception.UserAlreadyExistsException;
+import org.snoozy.snoozyauth.model.CustomUserDetails;
 import org.snoozy.snoozyauth.model.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,8 +35,8 @@ public class AuthService {
                         request.password()
                 )
         );
-
-        User user = (User) userDetailsService.loadUserByUsername(request.email());
+        CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(request.email());
+        User user =  userDetails.getUser();
 
         String accessToken = jwtService.generateTokenBasic(user);
         return new AuthResponse(accessToken);
