@@ -21,6 +21,6 @@ KAFKA_BOOTSTRAP_SERVERS=
 JWT_SECRET_TOKEN=
 ```
 # Project API documentation:
-### [Auth docs](https://github.com/fakechitor/snoozy-backend/blob/bbc070dafab7895c44307b50c2a206a6304cca44/snoozy-docs/api-description/authorization.md)
+### [Auth docs](https://github.com/fakechitor/snoozy-backend/blob/master/snoozy-docs/api-description/authorization.md)
 ***
-### [User docs](https://github.com/fakechitor/snoozy-backend/blob/bbc070dafab7895c44307b50c2a206a6304cca44/snoozy-docs/api-description/users.md)
+### [User docs](https://github.com/fakechitor/snoozy-backend/blob/master/snoozy-docs/api-description/users.md)
