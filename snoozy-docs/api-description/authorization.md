@@ -16,7 +16,7 @@
 
 ```
 {
-"accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJhYXNzYWRzYWRhc2RzYUBnbWFpbC5jb20iLCJuYW1lIjoidGVzdF91c2VyIiwiYXV0aCI6IkJBU0lDIiwiaWF0IjoxNzc1MTE4NTIwLCJleHAiOjE3NzYwNzg1MjB9.y-gWer5G8_WT8VKXFGBoB2m5XixlAC6GsoWmvBO4Hyw"
+  "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJhYXNzYWRzYWRhc2RzYUBnbWFpbC5jb20iLCJuYW1lIjoidGVzdF91c2VyIiwiYXV0aCI6IkJBU0lDIiwiaWF0IjoxNzc1MTE4NTIwLCJleHAiOjE3NzYwNzg1MjB9.y-gWer5G8_WT8VKXFGBoB2m5XixlAC6GsoWmvBO4Hyw"
 }
 ```
 
@@ -31,8 +31,8 @@ Errors
 #### Request (application-json)
 ```
 {
-"email": "user@example.com",
-"password": "password123"
+  "email": "user@example.com",
+  "password": "password123"
 }
 ```
 
@@ -40,7 +40,7 @@ Errors
 
 ```
 {
-"accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJhYXNzYWRzYWRhc2RzYUBnbWFpbC5jb20iLCJuYW1lIjoidGVzdF91c2VyIiwiYXV0aCI6IkJBU0lDIiwiaWF0IjoxNzc1MTE4NTIwLCJleHAiOjE3NzYwNzg1MjB9.y-gWer5G8_WT8VKXFGBoB2m5XixlAC6GsoWmvBO4Hyw"
+  "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJhYXNzYWRzYWRhc2RzYUBnbWFpbC5jb20iLCJuYW1lIjoidGVzdF91c2VyIiwiYXV0aCI6IkJBU0lDIiwiaWF0IjoxNzc1MTE4NTIwLCJleHAiOjE3NzYwNzg1MjB9.y-gWer5G8_WT8VKXFGBoB2m5XixlAC6GsoWmvBO4Hyw"
 }
 ```
 _Errors_
