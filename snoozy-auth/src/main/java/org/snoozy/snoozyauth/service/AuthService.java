@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.snoozy.snoozyauth.dto.AuthResponse;
 import org.snoozy.snoozyauth.dto.LoginRequestDto;
 import org.snoozy.snoozyauth.dto.RegisterRequestDto;
+import org.snoozy.snoozyauth.exception.UserAlreadyExistsException;
 import org.snoozy.snoozyauth.model.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,7 +40,7 @@ public class AuthService {
         return new AuthResponse(accessToken);
     }
 
-    public AuthResponse register(RegisterRequestDto request) {
+    public AuthResponse register(RegisterRequestDto request) throws UserAlreadyExistsException {
         User user = new User();
         user.setUsername(request.username());
         user.setEmail(request.email());
