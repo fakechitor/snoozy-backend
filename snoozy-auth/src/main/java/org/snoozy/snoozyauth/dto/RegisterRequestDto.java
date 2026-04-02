@@ -2,7 +2,7 @@ package org.snoozy.snoozyauth.dto;
 
 public record RegisterRequestDto(
     String username,
-    String email,
+    String phoneNumber,
     String password,
     String confirmPassword
 ) {

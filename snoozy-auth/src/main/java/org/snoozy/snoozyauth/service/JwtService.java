@@ -39,6 +39,7 @@ public class JwtService {
         return Jwts.builder()
                 .subject(user.getId().toString())
                 .claim("email", user.getEmail())
+                .claim("phoneNumber", user.getPhoneNumber())
                 .claim("name", user.getUsername())
                 .claim("auth", AuthType.BASIC.name())
                 .issuedAt(new Date())

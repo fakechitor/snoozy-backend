@@ -28,14 +28,14 @@ public class AuthService {
     private final UserDetailsService userDetailsService;
 
     public AuthResponse login(LoginRequestDto request) {
-        authenticationManager.authenticate(
+        var authentication= authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.email(),
+                        getPhoneNumber(request.phoneNumber()),
                         request.password()
                 )
         );
-        CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(request.email());
-        User user =  userDetails.getUser();
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        User user = customUserDetails.getUser();
 
         String accessToken = jwtService.generateTokenBasic(user);
         return new AuthResponse(accessToken);
@@ -44,11 +44,19 @@ public class AuthService {
     public AuthResponse register(RegisterRequestDto request) throws UserAlreadyExistsException {
         User user = new User();
         user.setUsername(request.username());
-        user.setEmail(request.email());
+        user.setPhoneNumber(getPhoneNumber(request.phoneNumber()));
         user.setPassword(passwordEncoder.encode(request.password()));
         user = userService.save(user);
 
         String accessToken = jwtService.generateTokenBasic(user);
         return new AuthResponse(accessToken);
+    }
+
+    private String getPhoneNumber(String phoneNumber) {
+        if (phoneNumber != null && phoneNumber.startsWith("+")) {
+            return phoneNumber.substring(1);
+        }
+
+        return phoneNumber;
     }
 }
