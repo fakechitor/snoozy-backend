@@ -21,7 +21,7 @@ public class User {
     @Column(name = "google_sub", unique = true)
     private String googleSub;
 
-    @Column(nullable = false)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "password")

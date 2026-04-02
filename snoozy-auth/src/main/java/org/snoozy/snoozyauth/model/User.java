@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Column(name = "google_sub", unique = true)
     private String googleSub;
 
-    @Column(nullable = false)
+    @Column(name = "email")
     private String email;
 
     private String username;
