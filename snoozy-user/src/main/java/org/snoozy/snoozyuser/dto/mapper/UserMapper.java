@@ -9,7 +9,8 @@ public class UserMapper {
     public UserResponseDto getUserResponseDto(User user) {
         return new UserResponseDto(
                 user.getUsername(),
-                user.getEmail()
+                user.getEmail(),
+                user.getPhoneNumber()
         );
     }
 }

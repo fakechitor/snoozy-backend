@@ -9,6 +9,7 @@ import org.snoozy.snoozyuser.model.User;
 import org.snoozy.snoozyuser.repository.UserRepository;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -23,13 +24,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public UserResponseDto getUserInfo(String email) {
-        var user = userRepository.findByEmail(email).orElseThrow(
+    public UserResponseDto getUserInfo(Long userId) {
+        var user = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("User doesn't exist"));
 
         return userMapper.getUserResponseDto(user);
     }
 
+    @Transactional
     public void handleAuthEvent(GoogleAuthMessage authMessage) {
         boolean isExist = userRepository.findByGoogleSub(authMessage.sub()).isPresent();
         if (!isExist){
