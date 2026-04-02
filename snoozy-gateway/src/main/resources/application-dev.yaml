@@ -16,5 +16,11 @@ spring:
                 - Path=/api/v1/users/**,/api/v1/friends/**
               filters:
                 - JwtAuthenticationFilterGateway
+            - id: group-service
+              uri: http://localhost:8083
+              predicates:
+                - Path=/api/v1/groups/**
+              filters:
+                - JwtAuthenticationFilterGateway
 jwt:
   secret-token: ${JWT_SECRET_TOKEN}
