@@ -41,6 +41,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private BigDecimal balance = BigDecimal.ZERO;
 
+    @Column(name = "phone_number", unique = true)
+    private String phoneNumber;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
 
