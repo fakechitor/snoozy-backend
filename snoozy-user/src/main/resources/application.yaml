@@ -25,3 +25,5 @@ spring:
           org.snoozy.snoozyauth.producer.event.GoogleAuthEvent:org.snoozy.snoozyuser.consumer.event.GoogleAuthMessage
 server:
   port: 8082
+util:
+  base-url: ${BASE_URI}
