@@ -6,7 +6,7 @@ public record GroupResponseDto(
         Long id,
         String name,
         Long ownerId,
-        String url,
+        String avatarUrl,
         Set<GroupMemberDto> members
 ) {
 }
