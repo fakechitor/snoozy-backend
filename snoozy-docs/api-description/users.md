@@ -6,21 +6,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0IiwiZW1haWwiOiJhYXNzYWRzY
 ```
 #### Под token подразумевается JWT accessToken, который выдается при авторизации
 
-
-# Получение аватарки (DEPRECATED)
-!!! Аватарка доступна по ссылке в запросе /api/v1/users/me 
-### GET `/api/v1/users/avatar`
-
-#### Request требует header Authorization
-```
-curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
-http://localhost:8080/api/v1/users/avatar
-```
-
-#### Response (200 OK)
-Возвращает аватарку в base64 формате
-
-
 # Получение информации о пользователе
 ### GET `/api/v1/users/me`
 
@@ -37,5 +22,21 @@ http://localhost:8080/api/v1/users/me
   "email": null,
   "phoneNumber": "7123123123",
   "avatarLink": "https://sun9-18.userapi.com/s/v1/ig2/WssxJmCQhqXVZBBGTcLaQTxGphlPs846gAOjFcwq5A6aXYGe5lcXFA6sCSGiZswZTQW0BKcy6tOR-OmhWog1yc8T.jpg?quality=95&as=32x32,48x48,72x72,96x96&from=bu&u=ceXmspzLIAkkdVKk0ZHoLYQ53jdGBwYgy8DpZH6IRDg&cs=96x0"
+}
+```
+
+
+# Загрузка аватарки пользователя
+### GET `/api/v1/users/avatar`
+
+#### Request требует header Authorization
+#### Загрузка аватарки через MULTIPART_FORM
+##### key = file
+##### value = avatar.png
+
+#### Response (200 OK)
+```
+{
+  "url": "http://localhost:8080/api/v1/files/avatar?key=users/avatars/4/0e69bf86-f650-4785-92e2-123b6dfe4f61.png"
 }
 ```
