@@ -26,7 +26,5 @@ spring:
               uri: http://localhost:8084
               predicates:
                 - Path=/api/v1/files/**
-              filters:
-                - JwtAuthenticationFilterGateway
 jwt:
   secret-token: ${JWT_SECRET_TOKEN}
