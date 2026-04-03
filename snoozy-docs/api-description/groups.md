@@ -119,3 +119,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0IiwiZW1haWwiOiJhYXNzYWRzY
   ]
 }
 ```
+
+
+# Загрузить аватарку группы
+### POST `/api/v1/groups/{id}`
+#### id - айди группы
+#### Request требует header Authorization
+#### Загрузка аватарки через MULTIPART_FORM
+##### key = file
+##### value = avatar.png
+
+#### Response (200 OK)
+```
+{
+  "url": "http://localhost:8080/api/v1/files/avatar?key=groups/avatars/4/82415c3e-0af8-49c0-ad5d-5f7808a92cd1.png"
+}
+```
