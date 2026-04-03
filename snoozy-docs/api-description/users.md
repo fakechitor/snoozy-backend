@@ -7,7 +7,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0IiwiZW1haWwiOiJhYXNzYWRzY
 #### Под token подразумевается JWT accessToken, который выдается при авторизации
 
 
-# Получение аватарки
+# Получение аватарки (DEPRECATED)
+!!! Аватарка доступна по ссылке в запросе /api/v1/users/me 
 ### GET `/api/v1/users/avatar`
 
 #### Request требует header Authorization
@@ -32,8 +33,9 @@ http://localhost:8080/api/v1/users/me
 #### Response (200 OK)
 ```
 {
-  "username": "test_user",
-  "email": "aassadsadsa@gmail.com",
-  "phoneNumber": "79998881234"
+  "username": "test_user1233",
+  "email": null,
+  "phoneNumber": "7123123123",
+  "avatarLink": "https://sun9-18.userapi.com/s/v1/ig2/WssxJmCQhqXVZBBGTcLaQTxGphlPs846gAOjFcwq5A6aXYGe5lcXFA6sCSGiZswZTQW0BKcy6tOR-OmhWog1yc8T.jpg?quality=95&as=32x32,48x48,72x72,96x96&from=bu&u=ceXmspzLIAkkdVKk0ZHoLYQ53jdGBwYgy8DpZH6IRDg&cs=96x0"
 }
 ```
