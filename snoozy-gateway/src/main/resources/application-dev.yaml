@@ -22,5 +22,11 @@ spring:
                 - Path=/api/v1/groups/**
               filters:
                 - JwtAuthenticationFilterGateway
+            - id: file-service
+              uri: http://localhost:8084
+              predicates:
+                - Path=/api/v1/files/**
+              filters:
+                - JwtAuthenticationFilterGateway
 jwt:
   secret-token: ${JWT_SECRET_TOKEN}
