@@ -8,6 +8,7 @@ import org.snoozy.snoozyuser.model.User;
 import org.snoozy.snoozyuser.repository.AvatarRepository;
 import org.snoozy.snoozyuser.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -22,6 +23,7 @@ public class AvatarService {
 
     private static final Long BASIC_AVATAR_ID = 1L;
 
+    @Transactional
     public AvatarResponseDto uploadUserPhoto(Long userId, MultipartFile file) {
         String objectLink = fileClient.uploadUserAvatar(userId, file);
 
