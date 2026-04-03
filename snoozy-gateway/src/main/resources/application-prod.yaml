@@ -10,3 +10,17 @@ spring:
               uri: ${AUTH_URI}
               predicates:
                 - Path=/api/v1/auth/**
+            - id: user-service
+              uri: ${USER_URI}
+              predicates:
+                - Path=/api/v1/users/**,/api/v1/friends/**
+              filters:
+                - JwtAuthenticationFilterGateway
+            - id: group-service
+              uri: ${GROUP_URI}
+              predicates:
+                - Path=/api/v1/groups/**
+              filters:
+                - JwtAuthenticationFilterGateway
+jwt:
+  secret-token: ${JWT_SECRET_TOKEN}
