@@ -44,7 +44,7 @@ public class AvatarController {
         return ResponseEntity.ok(
                 Map.of(
                         "objectKey", objectKey,
-                        "avatarUrl", "/api/v1/files/groups/" + groupId + "/avatar"
+                        "avatarUrl", "/api/v1/files/avatar?key=" + objectKey
                 )
         );
     }
