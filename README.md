@@ -19,6 +19,9 @@ MINIO_ROOT_PASSWORD=
 OAUTH_WEB_CLIENT=
 KAFKA_BOOTSTRAP_SERVERS=
 JWT_SECRET_TOKEN=
+AUTH_URI=
+USER_URI=
+GROUP_URI=
 ```
 # Project API documentation:
 ### [Auth docs](https://github.com/fakechitor/snoozy-backend/blob/master/snoozy-docs/api-description/authorization.md)
