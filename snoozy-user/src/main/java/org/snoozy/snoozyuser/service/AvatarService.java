@@ -21,14 +21,14 @@ public class AvatarService {
     private static final Long BASIC_AVATAR_ID = 1L;
 
     public byte[] getAvatar(Long userId) {
-        Avatar avatar = findAvatar(userId);
+        User user = userRepository.findById((userId)).get();
+        Avatar avatar = findAvatar(user);
+        // TODO change byte[] to link
         return fileClient.getAvatar(avatar.getObjectKey());
     }
 
-    private Avatar findAvatar(Long userId) {
+    public Avatar findAvatar(User user) {
         Long avatarId;
-
-        User user = userRepository.findById((userId)).get();
 
         if (user.getAvatar() == null) {
             avatarId = BASIC_AVATAR_ID;

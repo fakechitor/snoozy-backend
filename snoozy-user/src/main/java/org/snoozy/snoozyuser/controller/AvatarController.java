@@ -16,6 +16,7 @@ public class AvatarController {
 
     private final AvatarService avatarService;
 
+    // DEPRECATED
     @GetMapping
     public ResponseEntity<byte[]> getAvatar(@RequestHeader("X-User-Id") Long userId) {
         byte[] image = avatarService.getAvatar(userId);

@@ -20,13 +20,18 @@ public class UserService {
 
     private final UserMapper userMapper;
 
+    private final AvatarService avatarService;
+
     public User save(User user){
         return userRepository.save(user);
     }
 
     public UserResponseDto getUserInfo(Long userId) {
-        var user = userRepository.findById(userId).orElseThrow(
+        User user = userRepository.findById(userId).orElseThrow(
                 () -> new UserNotFoundException("User doesn't exist"));
+
+        Avatar avatar = avatarService.findAvatar(user);
+        user.setAvatar(avatar);
 
         return userMapper.getUserResponseDto(user);
     }

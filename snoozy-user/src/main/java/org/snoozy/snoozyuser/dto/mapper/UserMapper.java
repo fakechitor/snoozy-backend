@@ -10,7 +10,8 @@ public class UserMapper {
         return new UserResponseDto(
                 user.getUsername(),
                 user.getEmail(),
-                user.getPhoneNumber()
+                user.getPhoneNumber(),
+                user.getAvatar().getObjectKey()
         );
     }
 }
