@@ -29,3 +29,5 @@ GROUP_URI=
 ### [User docs](https://github.com/fakechitor/snoozy-backend/blob/master/snoozy-docs/api-description/users.md)
 ***
 ### [Group docs](https://github.com/fakechitor/snoozy-backend/blob/master/snoozy-docs/api-description/groups.md)
+***
+### [Group alarm docs]()
