@@ -30,4 +30,4 @@ GROUP_URI=
 ***
 ### [Group docs](https://github.com/fakechitor/snoozy-backend/blob/master/snoozy-docs/api-description/groups.md)
 ***
-### [Group alarm docs]()
+### [Group alarm docs](https://github.com/fakechitor/snoozy-backend/blob/groupAction/snoozy-docs/api-description/groupInteraction.md)
