@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: snoozy-alarm
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+
+server:
+  port: 8084
+
+jwt:
+  secret-token: ${JWT_SECRET_TOKEN}
