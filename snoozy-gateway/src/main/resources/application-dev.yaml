@@ -26,5 +26,11 @@ spring:
               uri: http://localhost:8084
               predicates:
                 - Path=/api/v1/files/**
+            - id: alarm-service
+              uri: http://localhost:8085
+              predicates:
+                - Path=/api/v1/alarms/**
+              filters:
+                - JwtAuthenticationFilterGateway
 jwt:
   secret-token: ${JWT_SECRET_TOKEN}

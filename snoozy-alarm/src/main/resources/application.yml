@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: snoozy-alarm
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+server:
+  port: 8085
