@@ -26,5 +26,11 @@ spring:
               uri: ${FILE_URI}
               predicates:
                 - Path=/api/v1/files/**
+            - id: alarm-service
+              uri: ${ALARM_URI}
+              predicates:
+                - Path=/api/v1/alarms/**
+              filters:
+                - JwtAuthenticationFilterGateway
 jwt:
   secret-token: ${JWT_SECRET_TOKEN}
