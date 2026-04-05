@@ -2,6 +2,7 @@ package org.snoozy.snoozyuser.service;
 
 import lombok.RequiredArgsConstructor;
 import org.snoozy.snoozyuser.consumer.event.GoogleAuthMessage;
+import org.snoozy.snoozyuser.dto.PhoneRequestDto;
 import org.snoozy.snoozyuser.dto.UserResponseDto;
 import org.snoozy.snoozyuser.dto.mapper.UserMapper;import org.snoozy.snoozyuser.exception.UserNotFoundException;
 import org.snoozy.snoozyuser.model.Avatar;
@@ -56,5 +57,23 @@ public class UserService {
 
             userRepository.save(user);
         }
+    }
+
+    public UserResponseDto getByPhoneNumber(PhoneRequestDto phoneRequestDto) {
+        String clearPhoneNumber = getPhoneNumber(phoneRequestDto.phoneNumber());
+        
+        User user = userRepository.findByPhoneNumber((clearPhoneNumber)).orElseThrow(
+                () -> new UserNotFoundException("User doesn't exist")
+        );
+
+        return userMapper.getUserResponseDto(user);
+    }
+
+    private String getPhoneNumber(String phoneNumber) {
+        if (phoneNumber != null && phoneNumber.startsWith("+")) {
+            return phoneNumber.substring(1);
+        }
+
+        return phoneNumber;
     }
 }

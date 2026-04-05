@@ -1,13 +1,11 @@
 package org.snoozy.snoozyuser.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.snoozy.snoozyuser.dto.PhoneRequestDto;
 import org.snoozy.snoozyuser.dto.UserResponseDto;
 import org.snoozy.snoozyuser.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -17,5 +15,11 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<UserResponseDto> getUserInfo(@RequestHeader("X-User-Id") Long userId){
         return ResponseEntity.ok().body(userService.getUserInfo(userId));
+    }
+
+    @GetMapping("/phone")
+    public ResponseEntity<UserResponseDto> getPhoneNumber(
+            @RequestBody PhoneRequestDto phoneRequestDto){
+        return ResponseEntity.ok().body(userService.getByPhoneNumber(phoneRequestDto));
     }
 }
