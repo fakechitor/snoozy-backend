@@ -1,108 +1,68 @@
-# Взаимодействие в группе
+
+## Base URL
+
+```
+/api/v1/alarms
+```
+
+---
 
 ## Содержание
 
 - [Модель данных](#модель-данных)
 - [Эндпоинты](#эндпоинты)
-- [Права доступа](#права-доступа)
-- [Действия друга над чужим будильником](#действия-друга-над-чужим-будильником)
-- [История входящих действий](#история-входящих-действий)
-- [Сценарий использования](#сценарий-использования)
-- [Коды ответов](#коды-ответов)
-- [Локальная разработка](#локальная-разработка)
+  - [Получить свои будильники](#получить-свои-будильники)
+  - [Создать будильник](#создать-будильник)
+  - [Обновить будильник](#обновить-будильник)
+  - [Удалить будильник](#удалить-будильник)
+  - [Получить выданные права](#получить-выданные-права)
+  - [Выдать право пользователю](#выдать-право-пользователю)
+  - [Удалённо запустить будильник](#удалённо-запустить-будильник)
+  - [Удалённо включить будильник](#удалённо-включить-будильник)
+  - [Удалённо выключить будильник](#удалённо-выключить-будильник)
+  - [Получить историю входящих действий](#получить-историю-входящих-действий)
+  - [Проверка состояния сервиса](#проверка-состояния-сервиса)
+- [Справочник значений](#справочник-значений)
 
 ---
 
 ## Модель данных
 
-### `Alarm` — Будильник пользователя
+### `Alarm` — Будильник
 
 | Поле | Тип | Описание |
 |---|---|---|
-| `id` | Long | ID будильника |
-| `ownerId` | Long | ID владельца |
+| `id` | Long | Идентификатор будильника |
+| `ownerId` | Long | Идентификатор владельца |
 | `title` | String | Название будильника |
 | `alarmTime` | DateTime | Дата и время срабатывания |
 | `enabled` | Boolean | Включён ли будильник |
-| `repeatPattern` | Enum | Режим повтора |
+| `repeatDays` | List\<Enum\> | Дни недели для повторения |
 | `soundName` | String | Название звука |
 | `difficultyLevel` | Int | Уровень сложности выключения |
+| `isOverslept` | Boolean | Был ли будильник пропущен |
+| `createdAt` | DateTime | Время создания |
+| `updatedAt` | DateTime | Время последнего обновления |
 
-**`repeatPattern`** — допустимые значения:
+**`repeatDays`** — допустимые значения: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`
 
-| Значение | Описание |
-|---|---|
-| `ONCE` | Однократно |
-| `DAILY` | Каждый день |
-| `WEEKDAYS` | По будням |
-| `WEEKENDS` | По выходным |
+```json
+"repeatDays": ["MON", "WED", "FRI"]
+```
 
----
-
-### `AlarmPermission` — Право другого пользователя взаимодействовать с будильниками
-
-| Поле | Тип | Описание |
-|---|---|---|
-| `id` | Long | ID записи |
-| `ownerId` | Long | ID владельца |
-| `targetUserId` | Long | ID пользователя, которому выдано право |
-| `permissionType` | Enum | Тип права |
-| `active` | Boolean | Активно ли право |
-| `createdAt` | DateTime | Дата выдачи |
-
-**`permissionType`** — допустимые значения:
-
-| Значение | Описание |
-|---|---|
-| `TRIGGER` | Удалённо запустить будильник |
-| `ENABLE_DISABLE` | Включать/выключать будильник |
-| `CREATE_ALARM` | Создавать будильники |
-| `UPDATE_ALARM` | Обновлять будильники |
-
----
-
-### `AlarmAction` — История действий над будильником
-
-| Поле | Тип | Описание |
-|---|---|---|
-| `id` | Long | ID записи |
-| `alarmId` | Long | ID будильника |
-| `actorUserId` | Long | Кто выполнил действие |
-| `targetUserId` | Long | Над чьим будильником |
-| `actionType` | Enum | Тип действия |
-| `status` | Enum | Статус выполнения |
-| `executedAt` | DateTime | Время выполнения |
-| `messageText` | String | Сообщение (опционально) |
-
-**`actionType`** — допустимые значения: `TRIGGER_NOW`, `ENABLE`, `DISABLE`
-
-**`status`** — допустимые значения: `CREATED`, `EXECUTED`, `REJECTED`, `FAILED`
+> Если `repeatDays` пустой — будильник считается одноразовым.
 
 ---
 
 ## Эндпоинты
 
-### `GET /api/v1/alarms/health` — Проверка состояния сервиса
+### Получить свои будильники
 
-Проверяет, что сервис запущен.
-
-Request требует header Authorization
-
-**Ответ `200 OK`**
-```json
-{
-  "status": "ok",
-  "module": "snoozy-alarm"
-}
+```http
+GET /api/v1/alarms
 ```
 
----
-
-### `GET /api/v1/alarms` — Получить свои будильники
-
 Возвращает список будильников текущего пользователя.
-
-Request требует header Authorization
 
 **Ответ `200 OK`**
 ```json
@@ -113,20 +73,29 @@ Request требует header Authorization
     "title": "Подъем",
     "alarmTime": "2026-04-05T07:30:00",
     "enabled": true,
-    "repeatPattern": "DAILY",
+    "repeatDays": ["MON", "WED", "FRI"],
     "soundName": "classic",
-    "difficultyLevel": 2
+    "difficultyLevel": 2,
+    "isOverslept": false
   }
 ]
 ```
 
+**Ошибки**
+
+| Код | Описание |
+|---|---|
+| `401 Unauthorized` | Пользователь не определён |
+
 ---
 
-### `POST /api/v1/alarms` — Создать будильник
+### Создать будильник
+
+```http
+POST /api/v1/alarms
+```
 
 Создаёт новый будильник текущего пользователя.
-
-Request требует header Authorization
 
 **Тело запроса**
 ```json
@@ -134,7 +103,7 @@ Request требует header Authorization
   "title": "Подъем",
   "alarmTime": "2026-04-05T07:30:00",
   "enabled": true,
-  "repeatPattern": "DAILY",
+  "repeatDays": ["MON", "WED", "FRI"],
   "soundName": "classic",
   "difficultyLevel": 2
 }
@@ -142,7 +111,7 @@ Request требует header Authorization
 
 > **Обязательные поля:** `title`, `alarmTime`
 
-**Ответ `201 Created`**
+**Ответ `200 OK`**
 ```json
 {
   "id": 1,
@@ -150,9 +119,10 @@ Request требует header Authorization
   "title": "Подъем",
   "alarmTime": "2026-04-05T07:30:00",
   "enabled": true,
-  "repeatPattern": "DAILY",
+  "repeatDays": ["MON", "WED", "FRI"],
   "soundName": "classic",
-  "difficultyLevel": 2
+  "difficultyLevel": 2,
+  "isOverslept": false
 }
 ```
 
@@ -160,21 +130,26 @@ Request требует header Authorization
 
 | Код | Описание |
 |---|---|
-| `400 Bad Request` | Не передан `title` или `alarmTime` |
+| `400 Bad Request` | Отсутствует `title` или `alarmTime` |
+| `401 Unauthorized` | Пользователь не определён |
 
 ---
 
-### `PATCH /api/v1/alarms/{alarmId}` — Обновить будильник
+### Обновить будильник
 
-Обновляет будильник текущего пользователя. Можно передавать только те поля, которые нужно изменить.
+```http
+PATCH /api/v1/alarms/{alarmId}
+```
 
-Request требует header Authorization
+Обновляет существующий будильник текущего пользователя. Можно передавать только изменяемые поля.
 
 **Тело запроса**
 ```json
 {
   "title": "Подъем на работу",
-  "enabled": false
+  "enabled": false,
+  "repeatDays": ["MON", "TUE", "WED", "THU", "FRI"],
+  "isOverslept": false
 }
 ```
 
@@ -186,9 +161,10 @@ Request требует header Authorization
   "title": "Подъем на работу",
   "alarmTime": "2026-04-05T07:30:00",
   "enabled": false,
-  "repeatPattern": "DAILY",
+  "repeatDays": ["MON", "TUE", "WED", "THU", "FRI"],
   "soundName": "classic",
-  "difficultyLevel": 2
+  "difficultyLevel": 2,
+  "isOverslept": false
 }
 ```
 
@@ -196,16 +172,19 @@ Request требует header Authorization
 
 | Код | Описание |
 |---|---|
-| `404 Not Found` | Будильник не найден |
+| `401 Unauthorized` | Пользователь не определён |
 | `403 Forbidden` | Будильник не принадлежит текущему пользователю |
+| `404 Not Found` | Будильник не найден |
 
 ---
 
-### `DELETE /api/v1/alarms/{alarmId}` — Удалить будильник
+### Удалить будильник
+
+```http
+DELETE /api/v1/alarms/{alarmId}
+```
 
 Удаляет будильник текущего пользователя.
-
-Request требует header Authorization
 
 **Ответ `204 No Content`**
 
@@ -213,52 +192,19 @@ Request требует header Authorization
 
 | Код | Описание |
 |---|---|
+| `401 Unauthorized` | Пользователь не определён |
+| `403 Forbidden` | Будильник не принадлежит текущему пользователю |
 | `404 Not Found` | Будильник не найден |
-| `403 Forbidden` | Нет прав на удаление |
 
 ---
 
-## Права доступа
+### Получить выданные права
 
-### `POST /api/v1/alarms/permissions` — Выдать право пользователю
-
-Выдаёт другому пользователю право взаимодействовать с будильниками владельца.
-
-Request требует header Authorization
-
-**Тело запроса**
-```json
-{
-  "targetUserId": 2,
-  "permissionType": "TRIGGER"
-}
+```http
+GET /api/v1/alarms/permissions
 ```
 
-**Ответ `201 Created`**
-```json
-{
-  "id": 1,
-  "ownerId": 1,
-  "targetUserId": 2,
-  "permissionType": "TRIGGER",
-  "active": true,
-  "createdAt": "2026-04-04T20:00:00"
-}
-```
-
-**Ошибки**
-
-| Код | Описание |
-|---|---|
-| `400 Bad Request` | Не передан `targetUserId` или `permissionType` |
-
----
-
-### `GET /api/v1/alarms/permissions` — Получить список выданных прав
-
-Возвращает права, которые текущий пользователь выдал другим.
-
-Request требует header Authorization
+Возвращает список прав, которые текущий пользователь выдал другим пользователям.
 
 **Ответ `200 OK`**
 ```json
@@ -274,15 +220,58 @@ Request требует header Authorization
 ]
 ```
 
+**Ошибки**
+
+| Код | Описание |
+|---|---|
+| `401 Unauthorized` | Пользователь не определён |
+
 ---
 
-## Действия друга над чужим будильником
+### Выдать право пользователю
 
-### `POST /api/v1/alarms/{alarmId}/trigger` — Удалённо запустить будильник
+```http
+POST /api/v1/alarms/permissions
+```
 
-Позволяет пользователю с правом `TRIGGER` удалённо запустить будильник владельца.
+Выдаёт другому пользователю право на взаимодействие с будильниками владельца.
 
-Request требует header Authorization
+**Тело запроса**
+```json
+{
+  "targetUserId": 2,
+  "permissionType": "TRIGGER"
+}
+```
+
+**Ответ `200 OK`**
+```json
+{
+  "id": 1,
+  "ownerId": 1,
+  "targetUserId": 2,
+  "permissionType": "TRIGGER",
+  "active": true,
+  "createdAt": "2026-04-04T20:00:00"
+}
+```
+
+**Ошибки**
+
+| Код | Описание |
+|---|---|
+| `400 Bad Request` | Отсутствует `targetUserId` или `permissionType` |
+| `401 Unauthorized` | Пользователь не определён |
+
+---
+
+### Удалённо запустить будильник
+
+```http
+POST /api/v1/alarms/{alarmId}/trigger
+```
+
+Позволяет другому пользователю удалённо запустить чужой будильник. Требует право `TRIGGER`.
 
 **Тело запроса**
 ```json
@@ -309,15 +298,19 @@ Request требует header Authorization
 
 | Код | Описание |
 |---|---|
+| `401 Unauthorized` | Пользователь не определён |
+| `403 Forbidden` | Нет права `TRIGGER` |
 | `404 Not Found` | Будильник не найден |
-| `403 Forbidden` | Право `TRIGGER` не выдано |
 
 ---
 
-### `POST /api/v1/alarms/{alarmId}/enable` — Включить чужой будильник
+### Удалённо включить будильник
 
-Требует право `ENABLE_DISABLE`.
-Request требует header Authorization
+```http
+POST /api/v1/alarms/{alarmId}/enable
+```
+
+Позволяет другому пользователю включить чужой будильник. Требует право `ENABLE_DISABLE`.
 
 **Ответ `200 OK`**
 ```json
@@ -337,15 +330,19 @@ Request требует header Authorization
 
 | Код | Описание |
 |---|---|
+| `401 Unauthorized` | Пользователь не определён |
+| `403 Forbidden` | Нет права `ENABLE_DISABLE` |
 | `404 Not Found` | Будильник не найден |
-| `403 Forbidden` | Право `ENABLE_DISABLE` не выдано |
 
 ---
 
-### `POST /api/v1/alarms/{alarmId}/disable` — Выключить чужой будильник
+### Удалённо выключить будильник
 
-Требует право `ENABLE_DISABLE`.
-Request требует header Authorization
+```http
+POST /api/v1/alarms/{alarmId}/disable
+```
+
+Позволяет другому пользователю выключить чужой будильник. Требует право `ENABLE_DISABLE`.
 
 **Ответ `200 OK`**
 ```json
@@ -365,18 +362,19 @@ Request требует header Authorization
 
 | Код | Описание |
 |---|---|
+| `401 Unauthorized` | Пользователь не определён |
+| `403 Forbidden` | Нет права `ENABLE_DISABLE` |
 | `404 Not Found` | Будильник не найден |
-| `403 Forbidden` | Право `ENABLE_DISABLE` не выдано |
 
 ---
 
-## История входящих действий
+### Получить историю входящих действий
 
-### `GET /api/v1/alarms/actions/incoming` — История действий над своими будильниками
+```http
+GET /api/v1/alarms/actions/incoming
+```
 
 Возвращает историю действий, совершённых над будильниками текущего пользователя.
-
-Request требует header Authorization
 
 **Ответ `200 OK`**
 ```json
@@ -394,78 +392,68 @@ Request требует header Authorization
 ]
 ```
 
----
-
-## Сценарий использования
-
-### 👥 Друг будит пользователя
-
-**Шаг 1.** Пользователь 1 создаёт будильник:
-```http
-POST /api/v1/alarms
-```
-```json
-{
-  "title": "Подъем",
-  "alarmTime": "2026-04-05T07:30:00"
-}
-```
-
-**Шаг 2.** Пользователь 1 выдаёт пользователю 2 право `TRIGGER`:
-```http
-POST /api/v1/alarms/permissions
-```
-```json
-{
-  "targetUserId": 2,
-  "permissionType": "TRIGGER"
-}
-```
-
-**Шаг 3.** Пользователь 2 удалённо запускает будильник:
-```http
-POST /api/v1/alarms/1/trigger
-```
-```json
-{
-  "messageText": "Вставай"
-}
-```
-
-**Шаг 4.** Пользователь 1 проверяет историю действий:
-```http
-GET /api/v1/alarms/actions/incoming
-```
-
----
-
-## Коды ответов
+**Ошибки**
 
 | Код | Описание |
 |---|---|
-| `200 OK` | Успешный запрос |
-| `201 Created` | Успешное создание |
-| `204 No Content` | Успешное удаление |
-| `400 Bad Request` | Невалидный запрос |
-| `401 Unauthorized` | Нет текущего пользователя |
-| `403 Forbidden` | Нет прав на действие |
-| `404 Not Found` | Сущность не найдена |
-| `500 Internal Server Error` | Внутренняя ошибка сервера |
+| `401 Unauthorized` | Пользователь не определён |
 
 ---
 
-## Локальная разработка
+### Проверка состояния сервиса
 
-Для локальной проверки можно временно использовать заглушку текущего пользователя:
+```http
+GET /api/v1/alarms/health
+```
 
-```java
-public Long getCurrentUserId() {
-    return 1L;
+Проверяет, что сервис запущен и отвечает.
+
+**Ответ `200 OK`**
+```json
+{
+  "status": "ok",
+  "module": "snoozy-alarm"
 }
 ```
 
-Для проверки сценария с другом:
+---
 
-1. Установить `1L` — выполнить действия от имени владельца
-2. Сменить на `2L` — выполнить `trigger`
-3. Вернуть `1L` — проверить `GET /actions/incoming`
+## Справочник значений
+
+### `repeatDays`
+
+| Значение | День |
+|---|---|
+| `MON` | Понедельник |
+| `TUE` | Вторник |
+| `WED` | Среда |
+| `THU` | Четверг |
+| `FRI` | Пятница |
+| `SAT` | Суббота |
+| `SUN` | Воскресенье |
+
+### `permissionType`
+
+| Значение | Описание |
+|---|---|
+| `TRIGGER` | Удалённо запустить будильник |
+| `ENABLE_DISABLE` | Включать/выключать будильник |
+| `CREATE_ALARM` | Создавать будильники |
+| `UPDATE_ALARM` | Обновлять будильники |
+
+### `actionType`
+
+| Значение | Описание |
+|---|---|
+| `TRIGGER_NOW` | Немедленный запуск |
+| `ENABLE` | Включение |
+| `DISABLE` | Выключение |
+
+### `status`
+
+| Значение | Описание |
+|---|---|
+| `CREATED` | Создано |
+| `EXECUTED` | Выполнено |
+| `REJECTED` | Отклонено |
+| `FAILED` | Ошибка |

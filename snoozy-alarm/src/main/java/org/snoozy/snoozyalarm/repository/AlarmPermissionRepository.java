@@ -10,9 +10,13 @@ import java.util.Optional;
 public interface AlarmPermissionRepository extends JpaRepository<AlarmPermission, Long> {
     List<AlarmPermission> findAllByOwnerId(Long ownerId);
 
-    Optional<AlarmPermission> findByOwnerIdAndTargetUserIdAndPermissionTypeAndActiveTrue(
+    Optional<AlarmPermission> findByOwnerIdAndTargetUserIdAndPermissionTypeAndIsActiveTrue(
             Long ownerId,
             Long targetUserId,
             AlarmPermissionType permissionType
     );
+
+    boolean existsByOwnerIdAndTargetUserIdAndPermissionTypeAndIsActiveTrue(Long ownerId, Long actorUserId, AlarmPermissionType permissionType);
+
+    List<AlarmPermission> findAllByOwnerIdAndIsActiveTrue(Long ownerId);
 }

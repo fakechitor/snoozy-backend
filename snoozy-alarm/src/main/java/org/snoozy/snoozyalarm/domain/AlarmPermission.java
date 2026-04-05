@@ -22,7 +22,7 @@ public class AlarmPermission {
     private AlarmPermissionType permissionType;
 
     @Column(name = "is_active")
-    private Boolean active;
+    private Boolean isActive;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -30,21 +30,25 @@ public class AlarmPermission {
     @PrePersist
     void onCreate() {
         this.createdAt = LocalDateTime.now();
-        if (active == null) active = true;
+        if (isActive == null) isActive = true;
     }
 
     public Long getId() { return id; }
+
     public Long getOwnerId() { return ownerId; }
     public void setOwnerId(Long ownerId) { this.ownerId = ownerId; }
-
     public Long getTargetUserId() { return targetUserId; }
+
     public void setTargetUserId(Long targetUserId) { this.targetUserId = targetUserId; }
-
     public AlarmPermissionType getPermissionType() { return permissionType; }
+
     public void setPermissionType(AlarmPermissionType permissionType) { this.permissionType = permissionType; }
+    public Boolean getIsActive() { return isActive; }
 
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
-
+    public void setIsActive(Boolean active) { this.isActive = active; }
     public LocalDateTime getCreatedAt() { return createdAt; }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

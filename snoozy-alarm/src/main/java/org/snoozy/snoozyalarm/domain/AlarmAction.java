@@ -66,4 +66,8 @@ public class AlarmAction {
     public void setMessageText(String messageText) { this.messageText = messageText; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
