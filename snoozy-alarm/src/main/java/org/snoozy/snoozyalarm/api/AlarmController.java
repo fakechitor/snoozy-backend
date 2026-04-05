@@ -14,49 +14,45 @@ import java.util.Map;
 public class AlarmController {
 
     private final AlarmService alarmService;
-    private final CurrentUserProvider currentUserProvider;
 
-    public AlarmController(AlarmService alarmService, CurrentUserProvider currentUserProvider) {
+    public AlarmController(AlarmService alarmService) {
         this.alarmService = alarmService;
-        this.currentUserProvider = currentUserProvider;
     }
 
     @GetMapping
-    public List<AlarmResponse> getOwnAlarms() {
-        Long currentUserId = currentUserProvider.getCurrentUserId();
+    public List<AlarmResponse> getOwnAlarms(
+            @RequestHeader("X-User-Id") Long currentUserId
+    ) {
         return alarmService.getOwnAlarms(currentUserId).stream().map(AlarmResponse::from).toList();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AlarmResponse createOwnAlarm(@RequestBody CreateAlarmRequest request) {
-        Long currentUserId = currentUserProvider.getCurrentUserId();
+    public AlarmResponse createOwnAlarm(@RequestBody CreateAlarmRequest request,
+                                        @RequestHeader("X-User-Id") Long currentUserId
+    ) {
         return AlarmResponse.from(alarmService.createOwnAlarm(currentUserId, request));
     }
 
     @PatchMapping("/{alarmId}")
-    public AlarmResponse updateOwnAlarm(@PathVariable Long alarmId, @RequestBody UpdateAlarmRequest request) {
-        Long currentUserId = currentUserProvider.getCurrentUserId();
+    public AlarmResponse updateOwnAlarm(@PathVariable Long alarmId, @RequestBody UpdateAlarmRequest request, @RequestHeader("X-User-Id") Long currentUserId ) {
         return AlarmResponse.from(alarmService.updateOwnAlarm(currentUserId, alarmId, request));
     }
 
     @DeleteMapping("/{alarmId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOwnAlarm(@PathVariable Long alarmId) {
-        Long currentUserId = currentUserProvider.getCurrentUserId();
+    public void deleteOwnAlarm(@PathVariable Long alarmId, @RequestHeader("X-User-Id") Long currentUserId) {
         alarmService.deleteOwnAlarm(currentUserId, alarmId);
     }
 
     @PostMapping("/permissions")
     @ResponseStatus(HttpStatus.CREATED)
-    public AlarmPermission grantPermission(@RequestBody GrantPermissionRequest request) {
-        Long currentUserId = currentUserProvider.getCurrentUserId();
+    public AlarmPermission grantPermission(@RequestBody GrantPermissionRequest request, @RequestHeader("X-User-Id") Long currentUserId) {
         return alarmService.grantPermission(currentUserId, request);
     }
 
     @GetMapping("/permissions")
-    public List<AlarmPermission> getPermissions() {
-        Long currentUserId = currentUserProvider.getCurrentUserId();
+    public List<AlarmPermission> getPermissions(@RequestHeader("X-User-Id") Long currentUserId) {
         return alarmService.getPermissions(currentUserId);
     }
 
@@ -64,27 +60,24 @@ public class AlarmController {
     @ResponseStatus(HttpStatus.CREATED)
     public AlarmActionResponse triggerFriendAlarm(
             @PathVariable Long alarmId,
-            @RequestBody(required = false) TriggerAlarmRequest request
+            @RequestBody(required = false) TriggerAlarmRequest request,
+            @RequestHeader("X-User-Id") Long currentUserId
     ) {
-        Long currentUserId = currentUserProvider.getCurrentUserId();
         return AlarmActionResponse.from(alarmService.triggerFriendAlarm(currentUserId, alarmId, request));
     }
 
     @PostMapping("/{alarmId}/enable")
-    public AlarmActionResponse enableFriendAlarm(@PathVariable Long alarmId) {
-        Long currentUserId = currentUserProvider.getCurrentUserId();
+    public AlarmActionResponse enableFriendAlarm(@PathVariable Long alarmId, @RequestHeader("X-User-Id") Long currentUserId) {
         return AlarmActionResponse.from(alarmService.setFriendAlarmEnabled(currentUserId, alarmId, true));
     }
 
     @PostMapping("/{alarmId}/disable")
-    public AlarmActionResponse disableFriendAlarm(@PathVariable Long alarmId) {
-        Long currentUserId = currentUserProvider.getCurrentUserId();
+    public AlarmActionResponse disableFriendAlarm(@PathVariable Long alarmId, @RequestHeader("X-User-Id") Long currentUserId) {
         return AlarmActionResponse.from(alarmService.setFriendAlarmEnabled(currentUserId, alarmId, false));
     }
 
     @GetMapping("/actions/incoming")
-    public List<AlarmActionResponse> getIncomingActions() {
-        Long currentUserId = currentUserProvider.getCurrentUserId();
+    public List<AlarmActionResponse> getIncomingActions(@RequestHeader("X-User-Id") Long currentUserId) {
         return alarmService.getIncomingActions(currentUserId).stream().map(AlarmActionResponse::from).toList();
     }
 

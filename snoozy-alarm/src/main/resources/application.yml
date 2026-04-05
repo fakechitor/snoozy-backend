@@ -9,11 +9,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-  kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
-
 server:
   port: 8084
-
-jwt:
-  secret-token: ${JWT_SECRET_TOKEN}
