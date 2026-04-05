@@ -1,6 +1,7 @@
 package org.snoozy.snoozyauth.dto;
 
 public record GoogleLoginRequest(
-        String idToken
+        String idToken,
+        String phoneNumber
 ) {
 }

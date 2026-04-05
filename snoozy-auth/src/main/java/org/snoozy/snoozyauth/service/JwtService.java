@@ -23,11 +23,12 @@ public class JwtService {
 
     private static final long EXPIRATION = 960000000;
 
-    public String generateTokenGoogle(GoogleUserInfo userInfo) {
+    public String generateTokenGoogle(User user) {
         return Jwts.builder()
-                .subject(userInfo.sub())
-                .claim("email", userInfo.email())
-                .claim("name", userInfo.name())
+                .subject(user.getId().toString())
+                .claim("email", user.getEmail())
+                .claim("phoneNumber", user.getPhoneNumber())
+                .claim("name", user.getUsername())
                 .claim("auth", AuthType.GOOGLE.name())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION))

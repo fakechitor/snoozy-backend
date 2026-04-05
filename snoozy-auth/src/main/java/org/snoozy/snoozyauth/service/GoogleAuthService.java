@@ -5,7 +5,10 @@ import org.snoozy.snoozyauth.dto.AuthResponse;
 import org.snoozy.snoozyauth.dto.GoogleLoginRequest;
 import org.snoozy.snoozyauth.dto.GoogleUserInfo;
 import org.snoozy.snoozyauth.dto.mapper.GoogleAuthMapper;
+import org.snoozy.snoozyauth.model.Avatar;
+import org.snoozy.snoozyauth.model.User;
 import org.snoozy.snoozyauth.producer.GoogleAuthProducer;
+import org.snoozy.snoozyauth.repository.AvatarRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,12 +23,36 @@ public class GoogleAuthService {
 
     private final JwtService jwtService;
 
+    private final AvatarRepository avatarRepository;
+
     public AuthResponse authenticate(GoogleLoginRequest googleLoginRequest) {
         String idTokenString = googleLoginRequest.idToken().trim();
+        String clearPhoneNumber = getPhoneNumber(googleLoginRequest.phoneNumber());
+
         GoogleUserInfo userInfo = googleAuthVerifier.verify(idTokenString);
 
-        googleAuthProducer.sendGoogleAuthEvent(googleAuthMapper.toEvent(userInfo));
+        Avatar avatar = new Avatar();
+        avatar.setObjectKey(userInfo.pictureUrl());
+        avatar.setContentType("image/png");
+        avatar.setSizeBytes(123L);
+        avatarRepository.save(avatar);
 
-        return new AuthResponse(jwtService.generateTokenGoogle(userInfo));
+        User user = new User();
+        user.setPhoneNumber(clearPhoneNumber);
+        user.setUsername(userInfo.name());
+        user.setEmail(userInfo.email());
+        user.setAvatar(avatar);
+
+//        googleAuthProducer.sendGoogleAuthEvent(googleAuthMapper.toEvent(userInfo));
+
+        return new AuthResponse(jwtService.generateTokenGoogle(user));
+    }
+
+    private String getPhoneNumber(String phoneNumber) {
+        if (phoneNumber != null && phoneNumber.startsWith("+")) {
+            return phoneNumber.substring(1);
+        }
+
+        return phoneNumber;
     }
 }
