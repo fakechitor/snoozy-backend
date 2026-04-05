@@ -1,31 +1,45 @@
 package org.snoozy.snoozyalarm.api.dto;
 
-import org.snoozy.snoozyalarm.domain.AlarmRepeatPattern;
+import org.snoozy.snoozyalarm.domain.AlarmDayOfWeek;
+
 import java.time.LocalDateTime;
+import java.util.Set;
 
 public class UpdateAlarmRequest {
+
     private String title;
     private LocalDateTime alarmTime;
     private Boolean enabled;
-    private AlarmRepeatPattern repeatPattern;
+    private Set<AlarmDayOfWeek> repeatDays;
     private String soundName;
     private Integer difficultyLevel;
+    private Boolean isOverslept;
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public String getTitle() {
+        return title;
+    }
 
-    public LocalDateTime getAlarmTime() { return alarmTime; }
-    public void setAlarmTime(LocalDateTime alarmTime) { this.alarmTime = alarmTime; }
+    public LocalDateTime getAlarmTime() {
+        return alarmTime;
+    }
 
-    public Boolean getEnabled() { return enabled; }
-    public void setEnabled(Boolean enabled) { this.enabled = enabled; }
+    public Boolean getEnabled() {
+        return enabled;
+    }
 
-    public AlarmRepeatPattern getRepeatPattern() { return repeatPattern; }
-    public void setRepeatPattern(AlarmRepeatPattern repeatPattern) { this.repeatPattern = repeatPattern; }
+    public Set<AlarmDayOfWeek> getRepeatDays() {
+        return repeatDays;
+    }
 
-    public String getSoundName() { return soundName; }
-    public void setSoundName(String soundName) { this.soundName = soundName; }
+    public String getSoundName() {
+        return soundName;
+    }
 
-    public Integer getDifficultyLevel() { return difficultyLevel; }
-    public void setDifficultyLevel(Integer difficultyLevel) { this.difficultyLevel = difficultyLevel; }
+    public Integer getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public Boolean getIsOverslept() {
+        return isOverslept;
+    }
 }
