@@ -123,7 +123,7 @@ public class AlarmService {
         permission.setOwnerId(ownerId);
         permission.setTargetUserId(request.getTargetUserId());
         permission.setPermissionType(request.getPermissionType());
-        permission.setActive(true);
+        permission.setIsActive(true);
         permission.setCreatedAt(LocalDateTime.now());
 
         return permissionRepository.save(permission);
