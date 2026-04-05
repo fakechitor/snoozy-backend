@@ -35,7 +35,7 @@ public class FileClient {
             });
 
             Map<String, String> response = restClient.post()
-                    .uri(baseUrl + "/api/v1/files/groups/{userId}/avatar", groupId)
+                    .uri(baseUrl + "/api/v1/files/groups/{groupId}/avatar", groupId)
                     .contentType(MediaType.MULTIPART_FORM_DATA)
                     .body(body)
                     .retrieve()

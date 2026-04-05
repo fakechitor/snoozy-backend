@@ -93,7 +93,7 @@ public class GroupService {
     private GroupMemberDto groupMemberToDto(GroupMember groupMember) {
         User user =  groupMember.getUser();
 
-        Avatar avatar = groupMember.getGroup().getAvatar();
+        Avatar avatar = groupMember.getUser().getAvatar();
         String avatarUrl = avatar != null ? avatar.getObjectKey() : null;
 
         return new GroupMemberDto(
