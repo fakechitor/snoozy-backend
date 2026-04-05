@@ -13,6 +13,7 @@ public class UserMapper {
         String avatarUrl = avatar != null ? avatar.getObjectKey() : null;
 
         return new UserResponseDto(
+                user.getId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPhoneNumber(),

@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/phone")
     public ResponseEntity<UserResponseDto> getPhoneNumber(
-            @RequestBody PhoneRequestDto phoneRequestDto){
-        return ResponseEntity.ok().body(userService.getByPhoneNumber(phoneRequestDto));
+            @RequestParam String phoneNumber){
+        return ResponseEntity.ok().body(userService.getByPhoneNumber(phoneNumber));
     }
 }

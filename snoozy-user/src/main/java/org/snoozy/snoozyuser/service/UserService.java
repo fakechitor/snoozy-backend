@@ -59,8 +59,8 @@ public class UserService {
         }
     }
 
-    public UserResponseDto getByPhoneNumber(PhoneRequestDto phoneRequestDto) {
-        String clearPhoneNumber = getPhoneNumber(phoneRequestDto.phoneNumber());
+    public UserResponseDto getByPhoneNumber(String phoneNumber) {
+        String clearPhoneNumber = getPhoneNumber(phoneNumber);
         
         User user = userRepository.findByPhoneNumber((clearPhoneNumber)).orElseThrow(
                 () -> new UserNotFoundException("User doesn't exist")
