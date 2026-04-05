@@ -17,14 +17,14 @@ public class Alarm {
     @Column(nullable = false, length = 120)
     private String title;
 
-    @Column(name = "alarm_time", nullable = false)
+    @Column(name = "alarm_time")
     private LocalDateTime alarmTime;
 
     @Column(nullable = false)
     private Boolean enabled;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "repeat_pattern", nullable = false, length = 32)
+    @Column(name = "repeat_pattern", length = 32)
     private AlarmRepeatPattern repeatPattern;
 
     @Column(name = "sound_name", length = 120)
@@ -36,7 +36,7 @@ public class Alarm {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @PrePersist

@@ -21,11 +21,11 @@ public class AlarmAction {
     private Long targetUserId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "action_type", nullable = false, length = 32)
+    @Column(name = "action_type", length = 32)
     private AlarmActionType actionType;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 32)
+    @Column(length = 32)
     private AlarmActionStatus status;
 
     @Column(name = "executed_at")

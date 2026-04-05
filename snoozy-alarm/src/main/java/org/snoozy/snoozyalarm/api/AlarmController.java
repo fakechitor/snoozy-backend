@@ -4,6 +4,7 @@ import org.snoozy.snoozyalarm.api.dto.*;
 import org.snoozy.snoozyalarm.domain.AlarmPermission;
 import org.snoozy.snoozyalarm.service.AlarmService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +21,11 @@ public class AlarmController {
     }
 
     @GetMapping
-    public List<AlarmResponse> getOwnAlarms(
+    public ResponseEntity<List<AlarmResponse>> getOwnAlarms(
             @RequestHeader("X-User-Id") Long currentUserId
     ) {
-        return alarmService.getOwnAlarms(currentUserId).stream().map(AlarmResponse::from).toList();
+        var alarms = alarmService.getOwnAlarms(currentUserId).stream().map(AlarmResponse::from).toList();
+        return ResponseEntity.ok(alarms);
     }
 
     @PostMapping
