@@ -87,4 +87,12 @@ public class AlarmController {
     public Map<String, String> health() {
         return Map.of("status", "ok", "module", "snoozy-alarm");
     }
+
+    @GetMapping("/users/{userId}")
+    public List<AlarmResponse> getUserAlarms(@PathVariable Long userId) {
+        return alarmService.getAlarmsByUserId(userId)
+                .stream()
+                .map(AlarmResponse::from)
+                .toList();
+    }
 }
