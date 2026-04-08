@@ -41,6 +41,10 @@ public class AlarmService {
         return alarmRepository.findAllByOwnerIdOrderByAlarmTimeAsc(ownerId);
     }
 
+    public List<Alarm> getAlarmsByUserId(Long userId) {
+        return alarmRepository.findAllByOwnerIdOrderByAlarmTimeAsc(userId);
+    }
+
     public Alarm createOwnAlarm(Long ownerId, CreateAlarmRequest request) {
         if (request.getTitle() == null || request.getTitle().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Title is required");
