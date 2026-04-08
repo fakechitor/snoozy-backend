@@ -1,0 +1,118 @@
+services:
+  db:
+    container_name: db_postgres
+    image: postgres:17.2
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+  kafka:
+    container_name: kafka
+    image: apache/kafka:3.9.2
+    restart: always
+    ports:
+      - "9092:9092"
+    volumes:
+      - kafka_data:/data
+    networks:
+      - app_network
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - app_network
+  sn_gateway:
+    container_name: snoozy-gateway
+    image: fakechitor/snoozy-gateway:latest
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - app_network
+  sn_auth:
+    container_name: snoozy-auth
+    image: fakechitor/snoozy-auth:latest
+    ports:
+      - "8082:8082"
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - kafka
+      - db
+    networks:
+      - app_network
+  sn_user:
+    container_name: snoozy-user
+    image: fakechitor/snoozy-user:latest
+    ports:
+      - "8083:8083"
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - kafka
+      - db
+    networks:
+      - app_network
+  sn_group:
+    container_name: snoozy-group
+    image: fakechitor/snoozy-group:latest
+    ports:
+      - "8084:8084"
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - app_network
+  sn_file:
+    container_name: snoozy-file
+    image: fakechitor/snoozy-file:latest
+    ports:
+      - "8085:8085"
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - minio
+    networks:
+      - app_network
+  sn_alarm:
+    container_name: snoozy-alarm
+    image: fakechitor/snoozy-alarm:latest
+    ports:
+      - "8086:8086"
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - app_network
+volumes:
+  pg_data:
+  kafka_data:
+  minio_data:
+    driver: local
+
+networks:
+  app_network:
+    driver: bridge
