@@ -17,6 +17,7 @@ public class AlarmResponse {
     private String soundName;
     private Integer difficultyLevel;
     private boolean isOverslept;
+    private LocalDateTime sleepTime;
 
     public static AlarmResponse from(Alarm alarm) {
         AlarmResponse response = new AlarmResponse();
@@ -29,6 +30,7 @@ public class AlarmResponse {
         response.soundName = alarm.getSoundName();
         response.difficultyLevel = alarm.getDifficultyLevel();
         response.isOverslept = alarm.isOverslept();
+        response.sleepTime = alarm.getSleepTime();
         return response;
     }
 
@@ -66,5 +68,9 @@ public class AlarmResponse {
 
     public boolean isOverslept() {
         return isOverslept;
+    }
+    
+    public LocalDateTime getSleepTime() {
+        return sleepTime;
     }
 }

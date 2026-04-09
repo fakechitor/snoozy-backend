@@ -61,6 +61,9 @@ public class Alarm {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(name = "sleep_time")
+    private LocalDateTime sleepTime;
+
     public Long getId() {
         return id;
     }
@@ -143,5 +146,13 @@ public class Alarm {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    
+    public LocalDateTime getSleepTime() {
+        return sleepTime;
+    }
+
+    public void setSleepTime(LocalDateTime sleepTime) {
+        this.sleepTime = sleepTime;
     }
 }

@@ -13,6 +13,7 @@ public class CreateAlarmRequest {
     private Set<AlarmDayOfWeek> repeatDays;
     private String soundName;
     private Integer difficultyLevel;
+    private LocalDateTime sleepTime;
 
     public String getTitle() {
         return title;
@@ -36,5 +37,9 @@ public class CreateAlarmRequest {
 
     public Integer getDifficultyLevel() {
         return difficultyLevel;
+    }
+
+    public LocalDateTime getSleepTime() {
+        return sleepTime;
     }
 }
