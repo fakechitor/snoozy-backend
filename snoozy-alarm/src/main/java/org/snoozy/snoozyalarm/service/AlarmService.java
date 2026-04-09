@@ -66,6 +66,7 @@ public class AlarmService {
         alarm.setOverslept(false);
         alarm.setCreatedAt(now);
         alarm.setUpdatedAt(now);
+        alarm.setSleepTime(request.getSleepTime());
 
         return alarmRepository.save(alarm);
     }
@@ -98,6 +99,10 @@ public class AlarmService {
         }
         if (request.getIsOverslept() != null) {
             alarm.setOverslept(request.getIsOverslept());
+        }
+
+        if (request.getSleepTime() != null) {
+            alarm.setSleepTime(request.getSleepTime());
         }
 
         alarm.setUpdatedAt(LocalDateTime.now());

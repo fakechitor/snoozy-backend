@@ -14,6 +14,7 @@ public class UpdateAlarmRequest {
     private String soundName;
     private Integer difficultyLevel;
     private Boolean isOverslept;
+    private LocalDateTime sleepTime;
 
     public String getTitle() {
         return title;
@@ -41,5 +42,9 @@ public class UpdateAlarmRequest {
 
     public Boolean getIsOverslept() {
         return isOverslept;
+    }
+    
+    public LocalDateTime getSleepTime() {
+        return sleepTime;
     }
 }
