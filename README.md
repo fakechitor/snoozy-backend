@@ -1,7 +1,7 @@
-# Project description
-Backend part of Snoozy app.
+# Описание проекта
+Бэкенд для приложения Snoozy.
 
-Stack:
+Стек:
 - Java
 - Spring
 - PostgreSQL
@@ -9,7 +9,7 @@ Stack:
 - Minio
 - Docker
 
-Required .env file:
+Необходимый для запуска .env файл:
 ```
 POSTGRES_USER=
 POSTGRES_PASSWORD=
@@ -28,7 +28,7 @@ FILE_URI=
 ALARM_URI=
 BASE_URI=
 ```
-# Project API documentation:
+# API документация:
 ### [Auth docs](https://github.com/fakechitor/snoozy-backend/blob/master/snoozy-docs/api-description/authorization.md)
 ***
 ### [User docs](https://github.com/fakechitor/snoozy-backend/blob/master/snoozy-docs/api-description/users.md)
